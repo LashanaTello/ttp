@@ -4,6 +4,8 @@ import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Portfolio from './components/Portfolio';
 import Transactions from './components/Transactions';
+import Login from './components/Login';
+import Register from './components/Register';
 
 
 class App extends Component {
@@ -15,6 +17,8 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Route exact path='/portfolio' component={Portfolio} />
           <Route exact path='/transactions' component={Transactions} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/register' component={Register} />
         </div>
       </BrowserRouter>
     );
