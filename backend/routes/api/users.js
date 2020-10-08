@@ -7,6 +7,7 @@ const keys = require("../../config/keys");
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const validatePortfolioInput = require("../../validation/portfolio");
 
 // Load User model
 const User = require("../../models/User");
@@ -103,6 +104,31 @@ router.post("/login", (req, res) => {
           .json({ passwordincorrect: "Invalid credentials" }); /*remember to change this*/
       }
     });
+  });
+});
+
+router.post("/buy", (req, res) => {
+  // Form validation
+  const { errors, isValid } = validatePortfolioInput(req.body);
+
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const transaction = {
+    ticker: req.body.ticker,
+    quantity: req.body.quantity,
+    price: req.body.price,
+  };
+
+  User.findByIdAndUpdate({ _id: req.body.id }, { "balance": req.body.balance , $push: {"transactions": transaction} }).then((err, docs) => { 
+    if (err) { 
+      console.log(err); 
+    } 
+    else { 
+      console.log("Updated"); 
+    }
   });
 });
 
